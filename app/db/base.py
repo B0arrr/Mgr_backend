@@ -10,8 +10,8 @@ from app.models.user_address import Base # noqa
 from app.models.user_company import Base # noqa
 from app.models.user_department import Base # noqa
 from app.models.user_employment import Base # noqa
-from app.models.user_managers import Base # noqa
-from app.models.user_positions import Base # noqa
-from app.models.user_roles import Base # noqa
-from app.models.user_schedules import Base # noqa
-from app.models.user_workhours import Base # noqa
+from app.models.user_manager import Base # noqa
+from app.models.user_position import Base # noqa
+from app.models.user_role import Base # noqa
+from app.models.user_schedule import Base # noqa
+from app.models.user_workhour import Base # noqa
