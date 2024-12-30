@@ -8,5 +8,5 @@ class Position(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, index=True)
 
-    users_positions = relationship("UsersPosition", back_populates="positions")
-    users = relationship("Users", secondary="userposition", back_populates="positions")
+    user_positions = relationship("UserPosition", back_populates="positions", viewonly=True)
+    users = relationship("User", secondary="userposition", back_populates="positions")

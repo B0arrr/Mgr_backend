@@ -1,4 +1,4 @@
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 
 class UserPositionBase(BaseModel):
@@ -19,7 +19,7 @@ class UserPositionInDBBase(UserPositionBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UserPosition(UserPositionInDBBase):

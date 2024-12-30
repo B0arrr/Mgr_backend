@@ -9,5 +9,5 @@ class UserDepartment(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     department_id = Column(Integer, ForeignKey('department.id'))
 
-    users = relationship('User', back_populates='user_departments')
-    departments = relationship('Department', back_populates='user_departments')
+    users = relationship('User', back_populates='user_departments', viewonly=True)
+    departments = relationship('Department', back_populates='user_departments', viewonly=True)

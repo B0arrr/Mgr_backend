@@ -1,4 +1,4 @@
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 
 class UserManagerBase(BaseModel):
@@ -18,7 +18,7 @@ class UserManageInDBBase(UserManagerBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UserManager(UserManageInDBBase):

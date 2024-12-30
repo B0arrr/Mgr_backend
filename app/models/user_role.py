@@ -9,5 +9,5 @@ class UserRole(Base):
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     role_id = Column(Integer, ForeignKey('role.id'), nullable=False)
 
-    users = relationship('User', back_populates='user_roles')
-    roles = relationship('Role', back_populates='user_roles')
+    users = relationship('User', back_populates='user_roles', viewonly=True)
+    roles = relationship('Role', back_populates='user_roles', viewonly=True)

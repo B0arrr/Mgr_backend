@@ -1,6 +1,6 @@
 from datetime import date, datetime
 
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 
 class UserWorkHourBase(BaseModel):
@@ -23,7 +23,7 @@ class UserWorkHourInDBBase(UserWorkHourBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UserWorkHour(UserWorkHourInDBBase):

@@ -12,5 +12,5 @@ class Address(Base):
     zip = Column(String, index=True)
     country = Column(String, index=True)
 
-    user_addresses = relationship("UserAddress", back_populates="addresses")
-    users = relationship("User", secondary="useradddress", back_populates="addresses")
+    user_addresses = relationship("UserAddress", back_populates="addresses", viewonly=True)
+    users = relationship("User", secondary="useraddress", back_populates="addresses")

@@ -1,4 +1,4 @@
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 
 class EmploymentBase(BaseModel):
@@ -19,7 +19,7 @@ class EmploymentInDBBase(EmploymentBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Employment(EmploymentInDBBase):

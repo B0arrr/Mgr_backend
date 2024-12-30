@@ -9,5 +9,5 @@ class UserCompany(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     company_id = Column(Integer, ForeignKey('company.id'))
 
-    users = relationship('User', back_populates='user_companies')
-    companies = relationship('Company', back_populates='user_companies')
+    users = relationship('User', back_populates='user_companies', viewonly=True)
+    companies = relationship('Company', back_populates='user_companies', viewonly=True)

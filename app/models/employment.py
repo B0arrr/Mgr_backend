@@ -10,5 +10,5 @@ class Employment(Base):
     max_hours_per_day = Column(Integer)
     max_hours_per_week = Column(Integer)
 
-    user_employments = relationship("EmploymentUser", back_populates="employments")
+    user_employments = relationship("UserEmployment", back_populates="employments", viewonly=True)
     users = relationship("User", secondary="useremployment", back_populates="employments")

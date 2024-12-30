@@ -4,6 +4,7 @@ from .department import Department, DepartmentCreate, DepartmentUpdate
 from .employment import Employment, EmploymentCreate, EmploymentUpdate
 from .position import Position, PositionCreate, PositionUpdate
 from .role import Role, RoleCreate, RoleUpdate
+from .token import Token, TokenPayload
 from .user import User, UserCreate, UserUpdate
 from .user_address import UserAddress, UserAddressCreate, UserAddressUpdate
 from .user_company import UserCompany, UserCompanyCreate, UserCompanyUpdate

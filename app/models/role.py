@@ -8,5 +8,5 @@ class Role(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, index=True)
 
-    user_roles = relationship("UserRole", back_populates="roles")
+    user_roles = relationship("UserRole", back_populates="roles", viewonly=True)
     users = relationship("User", secondary="userrole", back_populates="roles")

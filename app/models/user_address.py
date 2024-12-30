@@ -10,5 +10,5 @@ class UserAddress(Base):
     address_id = Column(Integer, ForeignKey('address.id'))
     is_remote = Column(Boolean, default=False)
 
-    users = relationship('User', back_populates='user_addresses')
-    addresses = relationship('Address', back_populates='user_addresses')
+    users = relationship('User', back_populates='user_addresses', viewonly=True)
+    addresses = relationship('Address', back_populates='user_addresses', viewonly=True)

@@ -9,5 +9,5 @@ class UserEmployment(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     employment_id = Column(Integer, ForeignKey('employment.id'))
 
-    users = relationship('User', backref='user_employments')
-    employments = relationship('Employment', backref='user_employments')
+    users = relationship('User', back_populates='user_employments', viewonly=True)
+    employments = relationship('Employment', back_populates='user_employments', viewonly=True)

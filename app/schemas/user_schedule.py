@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 
 class UserScheduleBase(BaseModel):
@@ -21,7 +21,7 @@ class UserScheduleInDBBase(UserScheduleBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UserSchedule(UserScheduleInDBBase):

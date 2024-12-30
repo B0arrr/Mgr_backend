@@ -1,4 +1,4 @@
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 
 class DepartmentBase(BaseModel):
@@ -17,7 +17,7 @@ class DepartmentInDBBase(DepartmentBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Department(DepartmentInDBBase):

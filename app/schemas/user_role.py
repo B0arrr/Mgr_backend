@@ -1,4 +1,4 @@
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 
 class UserRoleBase(BaseModel):
@@ -18,7 +18,7 @@ class UserRoleInDBBase(UserRoleBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UserRole(UserRoleInDBBase):

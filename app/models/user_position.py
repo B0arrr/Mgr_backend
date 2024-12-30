@@ -10,5 +10,5 @@ class UserPosition(Base):
     position_id = Column(Integer, ForeignKey('position.id'))
     is_manager = Column(Boolean, default=False)
 
-    users = relationship('User', back_populates='user_positions')
-    positions = relationship('Position', back_populates='user_positions')
+    users = relationship('User', back_populates='user_positions', viewonly=True)
+    positions = relationship('Position', back_populates='user_positions', viewonly=True)
