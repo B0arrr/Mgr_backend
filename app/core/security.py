@@ -1,10 +1,19 @@
+from dataclasses import dataclass
 from datetime import datetime, timezone, timedelta
 from typing import Any
 
+import bcrypt
 import jwt
 from passlib.context import CryptContext
 
 from app.core.config import settings
+
+@dataclass
+class SolveBugBcryptWarning:
+    __version__: str = getattr(bcrypt, "__version__")
+
+
+setattr(bcrypt, "__about__", SolveBugBcryptWarning())
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
