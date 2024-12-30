@@ -7,6 +7,10 @@ name = "pypi"
 fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 alembic = "*"
+pyjwt = "*"
+passlib = {extras = ["bcrypt"], version = "*"}
+python-multipart = "*"
+pydantic-settings = "*"
 
 [dev-packages]
 
