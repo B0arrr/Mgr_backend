@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
@@ -13,8 +15,12 @@ class AddressCreate(AddressBase):
     pass
 
 
-class AddressUpdate(AddressBase):
-    pass
+class AddressUpdate(BaseModel):
+    street: Optional[str] = None
+    city: Optional[str] = None
+    state: Optional[str] = None
+    zip: Optional[str] = None
+    country: Optional[str] = None
 
 
 class AddressInDBBase(AddressBase):

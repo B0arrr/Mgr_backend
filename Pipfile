@@ -11,8 +11,10 @@ pyjwt = "*"
 passlib = {extras = ["bcrypt"], version = "*"}
 python-multipart = "*"
 pydantic-settings = "*"
+httpx = "*"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.13"
