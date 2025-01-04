@@ -1,4 +1,8 @@
+from typing import Optional
+
 from pydantic import BaseModel
+
+from app.schemas import Address
 
 
 class CompanyBase(BaseModel):
@@ -10,12 +14,14 @@ class CompanyCreate(CompanyBase):
     pass
 
 
-class CompanyUpdate(CompanyBase):
-    pass
+class CompanyUpdate(BaseModel):
+    name: Optional[str] = None
+    address_id: Optional[int] = None
 
 
 class CompanyInDBBase(CompanyBase):
     id: int
+    address: Optional[Address] = None
 
     class Config:
         from_attributes = True

@@ -8,5 +8,5 @@ class Department(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, index=True)
 
-    user_departments = relationship("UserDepartment", back_populates="departments", viewonly=True)
-    users = relationship("User", secondary="userdepartment", back_populates="departments")
+    user_departments = relationship("UserEmployment", back_populates="departments", viewonly=True)
+    users = relationship("User", secondary="useremployment", back_populates="departments")

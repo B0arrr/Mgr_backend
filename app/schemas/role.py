@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
@@ -10,7 +12,7 @@ class RoleCreate(RoleBase):
 
 
 class RoleUpdate(RoleBase):
-    pass
+    name: Optional[str] = None
 
 
 class RoleInDBBase(RoleBase):

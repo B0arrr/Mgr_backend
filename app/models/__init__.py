@@ -6,11 +6,8 @@ from .position import Position
 from .role import Role
 from .user import User
 from .user_address import UserAddress
-from .user_company import UserCompany
-from .user_department import UserDepartment
 from .user_employment import UserEmployment
 from .user_manager import UserManager
-from .user_position import UserPosition
 from .user_role import UserRole
 from .user_schedule import UserSchedule
 from .user_workhour import UserWorkHour

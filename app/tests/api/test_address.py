@@ -3,7 +3,10 @@ from starlette.testclient import TestClient
 
 from app import crud
 from app.core.config import settings
+from app.schemas import UserAddressCreate
 from app.tests.utils.address import create_random_address
+from app.tests.utils.user import create_random_user
+from app.tests.utils.utils import random_bool
 
 
 def test_get_addresses(client: TestClient, db: Session):
@@ -44,6 +47,29 @@ def test_get_address_not_found(client: TestClient, db: Session):
     content = res.json()
     assert res.status_code == 404
     assert content == {"detail": "Address not found"}
+
+
+def test_get_users_from_address(client: TestClient, db: Session):
+    obj = create_random_address(db)
+    users = [create_random_user(db) for _ in range(5)]
+    for user in users:
+        tmp = UserAddressCreate(
+            user_id=user.id,
+            address_id=obj.id,
+            is_remote=random_bool(),
+        )
+        crud.user_address.create(db, obj_in=tmp)
+    res = client.get(f"{settings.API_V1_STR}/address/{obj.id}/users")
+    content = res.json()
+    objs = crud.address.get(db, id=obj.id).users
+    assert res.status_code == 200
+    assert len(content) == 5
+    for i, j in zip(objs, content):
+        assert i.id == j["id"]
+        assert i.first_name == j["first_name"]
+        assert i.last_name == j["last_name"]
+        assert i.email == j["email"]
+        assert i.password == j["password"]
 
 
 def test_create_address(client: TestClient, db: Session):
@@ -104,10 +130,10 @@ def test_update_non_existing_address(client: TestClient, db: Session):
     obj = create_random_address(db)
     obj_in = {
         "street": "test",
-        #"city": "test",
-        #"state": "test",
-        #"zip": "test",
-        #"country": "test",
+        # "city": "test",
+        # "state": "test",
+        # "zip": "test",
+        # "country": "test",
     }
     crud.address.remove(db, id=obj.id)
     res = client.put(f"{settings.API_V1_STR}/address/{obj.id}", json=obj_in)

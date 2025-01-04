@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
@@ -11,8 +13,10 @@ class EmploymentCreate(EmploymentBase):
     pass
 
 
-class EmploymentUpdate(EmploymentBase):
-    pass
+class EmploymentUpdate(BaseModel):
+    name: Optional[str] = None
+    max_hours_per_day: Optional[int] = None
+    max_hours_per_week: Optional[int] = None
 
 
 class EmploymentInDBBase(EmploymentBase):

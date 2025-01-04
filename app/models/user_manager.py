@@ -9,5 +9,5 @@ class UserManager(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     manager_id = Column(Integer, ForeignKey('user.id'))
 
-    users = relationship('User', foreign_keys=[user_id],back_populates='managed_by')
-    managers = relationship('User', foreign_keys=[manager_id],back_populates='manages')
+    users = relationship('User', foreign_keys=[user_id], back_populates='managed_by')
+    managers = relationship('User', foreign_keys=[manager_id], back_populates='manages')

@@ -32,3 +32,7 @@ class AddressInDBBase(AddressBase):
 
 class Address(AddressInDBBase):
     pass
+
+
+class AddressJoined(AddressInDBBase):
+    is_remote: Optional[bool] = False

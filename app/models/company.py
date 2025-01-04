@@ -9,6 +9,6 @@ class Company(Base):
     name = Column(String, index=True)
     address_id = Column(Integer, ForeignKey('address.id'))
 
-    user_companies = relationship('UserCompany', back_populates='companies', viewonly=True)
-    users = relationship('User', secondary="usercompany", back_populates='companies')
-    addresses = relationship('Address')
+    user_companies = relationship('UserEmployment', back_populates='companies', viewonly=True)
+    users = relationship('User', secondary="useremployment", back_populates='companies')
+    address = relationship('Address')

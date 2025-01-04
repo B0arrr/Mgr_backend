@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
@@ -10,8 +12,9 @@ class UserRoleCreate(UserRoleBase):
     pass
 
 
-class UserRoleUpdate(UserRoleBase):
-    pass
+class UserRoleUpdate(BaseModel):
+    user_id: Optional[int]
+    role_id: Optional[int]
 
 
 class UserRoleInDBBase(UserRoleBase):

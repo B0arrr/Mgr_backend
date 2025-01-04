@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
@@ -9,8 +11,8 @@ class PositionCreate(PositionBase):
     pass
 
 
-class PositionUpdate(PositionBase):
-    pass
+class PositionUpdate(BaseModel):
+    name: Optional[str] = None
 
 
 class PositionInDBBase(PositionBase):

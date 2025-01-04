@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException
 
 from app import crud
 from app.api.deps import SessionDep
-from app.schemas import Address, AddressCreate, AddressUpdate
+from app.schemas import Address, AddressCreate, AddressUpdate, User
 
 router = APIRouter(prefix="/address", tags=["address"])
 
@@ -31,6 +31,20 @@ async def get_address(db: SessionDep, id: int) -> Any:
     if not address:
         raise HTTPException(status_code=404, detail="Address not found")
     return address
+
+
+@router.get("/{id}/users", response_model=List[User])
+async def get_users_from_address(db: SessionDep, id: int) -> Any:
+    """
+    Get users from address
+    :param db: Database session
+    :param id: Id of user
+    :return: Returns list of users
+    """
+    address = crud.address.get(db=db, id=id)
+    if not address:
+        raise HTTPException(status_code=404, detail="Address not found")
+    return address.users
 
 
 @router.post("/", response_model=Address)

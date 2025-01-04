@@ -6,7 +6,7 @@ from app.schemas import PositionCreate, PositionUpdate
 
 
 class CRUDPosition(CRUDBase[Position, PositionCreate, PositionUpdate]):
-    def get_by_name(self, db: Session, name: str) -> Position:
+    def get_by_name(self, db: Session, *, name: str) -> Position:
         return db.query(Position).filter(Position.name == name).first()
 
 

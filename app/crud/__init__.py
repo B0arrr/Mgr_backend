@@ -6,11 +6,8 @@ from .crud_position import position
 from .crud_role import role
 from .crud_user import user
 from .crud_user_address import user_address
-from .crud_user_company import user_company
-from .crud_user_department import user_department
 from .crud_user_employment import user_employment
 from .crud_user_manager import user_manager
-from .crud_user_position import user_position
 from .crud_user_role import user_role
 from .crud_user_schedule import user_schedule
 from .crud_user_workhour import user_work_hour

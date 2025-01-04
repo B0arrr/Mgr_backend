@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class UserAddressBase(BaseModel):
     user_id: int
-    address: int
+    address_id: int
     is_remote: bool
 
 
