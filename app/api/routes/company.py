@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException
 
 from app import crud
 from app.api.deps import SessionDep
-from app.schemas import Company, CompanyCreate, CompanyUpdate, User
+from app.schemas import Company, CompanyCreate, CompanyUpdate, User, CompanyDeleted
 
 router = APIRouter(prefix="/company", tags=["company"])
 
@@ -76,7 +76,7 @@ async def update_company(db: SessionDep, company_id: int, obj_in: CompanyUpdate)
     return crud.company.update(db, db_obj=company, obj_in=obj_in)
 
 
-@router.delete("/{company_id}", response_model=Company)
+@router.delete("/{company_id}", response_model=CompanyDeleted)
 async def delete_company(db: SessionDep, company_id: int) -> Any:
     """
     Delete a company

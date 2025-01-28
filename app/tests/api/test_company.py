@@ -148,9 +148,9 @@ def test_delete_company(client: TestClient, db: Session):
     content = res.json()
     obj_get = crud.company.get(db, id=obj.id)
     assert res.status_code == 200
-    assert content["id"] == obj_get.id
-    assert content["name"] == obj_get.name
-    assert content["address_id"] == obj_get.address_id
+    assert content["id"] == obj.id
+    assert content["name"] == obj.name
+    assert content["address_id"] == obj.address_id
     assert not obj_get
 
 

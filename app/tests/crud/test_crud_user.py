@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app import crud
 from app.core.security import get_password_hash
 from app.models import User
-from app.schemas import UserAddressCreate
+from app.schemas import UserAddressCreate, UserCreate, UserUpdate
 from app.tests.utils.address import create_random_address
 from app.tests.utils.user import create_random_user
 from app.tests.utils.utils import random_bool
@@ -93,3 +93,39 @@ def test_authenticate(db: Session):
     user.password = get_password_hash(password)
     obj = crud.user.authenticate(db, email=user.email, password=password)
     assert obj == user
+
+
+def test_create_user(db: Session):
+    user = UserCreate(
+        first_name='John',
+        last_name='Smith',
+        email='john.smith@mail.com',
+        password=get_password_hash('JohnSmith1!'),
+        is_active=True,
+        has_flexible_working_hours=False,
+    )
+    obj_in_db = crud.user.create(db, obj_in=user)
+    assert obj_in_db
+    assert obj_in_db.first_name == user.first_name
+    assert obj_in_db.last_name == user.last_name
+    assert obj_in_db.email == user.email
+    assert obj_in_db.is_active == user.is_active
+    assert obj_in_db.password == user.password
+    assert obj_in_db.has_flexible_working_hours == user.has_flexible_working_hours
+
+
+def test_update_user(db: Session):
+    obj = create_random_user(db)
+    obj_in = UserUpdate(
+        first_name='Bob',
+    )
+    obj_updated = crud.user.update(db, db_obj=obj, obj_in=obj_in)
+    assert obj_updated.first_name == obj_in.first_name
+
+
+def test_delete_user(db: Session):
+    obj = create_random_user(db)
+    obj_deleted = crud.user.remove(db, id=obj.id)
+    obj_get = crud.user.get(db, id=obj.id)
+    assert obj_deleted == obj
+    assert not obj_get

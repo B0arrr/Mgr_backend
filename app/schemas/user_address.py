@@ -1,18 +1,22 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
 class UserAddressBase(BaseModel):
     user_id: int
     address_id: int
-    is_remote: bool
+    is_remote: Optional[bool] = False
 
 
 class UserAddressCreate(UserAddressBase):
     pass
 
 
-class UserAddressUpdate(UserAddressBase):
-    pass
+class UserAddressUpdate(BaseModel):
+    user_id: Optional[int] = None
+    address_id: Optional[int] = None
+    is_remote: Optional[bool] = None
 
 
 class UserAddressInDBBase(UserAddressBase):

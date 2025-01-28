@@ -13,8 +13,8 @@ class UserRoleCreate(UserRoleBase):
 
 
 class UserRoleUpdate(BaseModel):
-    user_id: Optional[int]
-    role_id: Optional[int]
+    user_id: Optional[int] = None
+    role_id: Optional[int] = None
 
 
 class UserRoleInDBBase(UserRoleBase):

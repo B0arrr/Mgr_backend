@@ -21,11 +21,14 @@ class CompanyUpdate(BaseModel):
 
 class CompanyInDBBase(CompanyBase):
     id: int
-    address: Optional[Address] = None
 
     class Config:
         from_attributes = True
 
 
 class Company(CompanyInDBBase):
+    address: Optional[Address] = None
+
+
+class CompanyDeleted(CompanyInDBBase):
     pass

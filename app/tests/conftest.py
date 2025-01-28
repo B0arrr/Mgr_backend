@@ -4,7 +4,6 @@ import pytest
 from sqlalchemy.orm import Session
 from starlette.testclient import TestClient
 
-from app.api.deps import get_db
 from app.db.db import init_db, engine
 from app.main import app
 from app.models import Address, Company, Department, Employment, Position, Role, User, UserAddress, UserEmployment, \
@@ -31,8 +30,7 @@ def client() -> Generator:
 
 
 @pytest.fixture(scope='session', autouse=True)
-def test():
-    db = next(get_db())
+def test(db: Session):
     create_random_address(db)
     create_random_company(db)
     create_random_department(db)

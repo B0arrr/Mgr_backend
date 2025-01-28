@@ -14,7 +14,6 @@ class CRUDUserEmployment(CRUDBase[UserEmployment, UserEmploymentCreate, UserEmpl
             department_id=obj_in.department_id,
             position_id=obj_in.position_id,
             start_date=obj_in.start_date,
-            end_date=None,
         )
         db.add(user_employment)
         db.commit()

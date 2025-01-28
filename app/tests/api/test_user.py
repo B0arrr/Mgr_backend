@@ -4,6 +4,7 @@ from starlette.testclient import TestClient
 from app import crud
 from app.core.config import settings
 from app.tests.utils.user import create_random_user
+from app.tests.utils.utils import random_lower_string, random_email, random_password, random_bool
 
 
 def test_get_users(client: TestClient, db: Session):
@@ -16,10 +17,10 @@ def test_get_users(client: TestClient, db: Session):
     assert res.status_code == 200
     for i, j in zip(objs, content):
         assert i.id == j["id"]
-        i.first_name = j["first_name"]
-        i.last_name = j["last_name"]
-        i.email = j["email"]
-        i.password = j["password"]
+        assert i.first_name == j["first_name"]
+        assert i.last_name == j["last_name"]
+        assert i.email == j["email"]
+        assert i.password == j["password"]
 
 
 def test_get_user(client: TestClient, db: Session):
@@ -42,3 +43,84 @@ def test_get_user_not_found(client: TestClient, db: Session):
     content = res.json()
     assert res.status_code == 404
     assert content == {"detail": "User not found"}
+
+
+def test_create_user(client: TestClient, db: Session):
+    data = {
+        "first_name": random_lower_string(20),
+        "last_name": random_lower_string(10),
+        "email": random_email(),
+        "password": random_password(),
+        "is_active": random_bool(),
+        "has_flexible_working_hours": random_bool(),
+    }
+    res = client.post(f"{settings.API_V1_STR}/user", json=data)
+    content = res.json()
+    assert res.status_code == 200
+    assert content["first_name"] == data["first_name"]
+    assert content["last_name"] == data["last_name"]
+    assert content["email"] == data["email"]
+    assert content["is_active"] == data["is_active"]
+    assert content["has_flexible_working_hours"] == data["has_flexible_working_hours"]
+    assert "id" in content
+
+
+def test_create_existing_user(client: TestClient, db: Session):
+    user = create_random_user(db)
+    data = {
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "email": user.email,
+        "password": user.password,
+        "is_active": user.is_active,
+        "has_flexible_working_hours": user.has_flexible_working_hours,
+    }
+    res = client.post(f"{settings.API_V1_STR}/user", json=data)
+    content = res.json()
+    assert res.status_code == 400
+    assert content["detail"] == "Email already registered"
+
+
+def test_update_user(client: TestClient, db: Session):
+    user = create_random_user(db)
+    data = {
+        "first_name": "John",
+    }
+    res = client.put(f"{settings.API_V1_STR}/user/{user.id}", json=data)
+    content = res.json()
+    assert res.status_code == 200
+    assert content["first_name"] == data["first_name"]
+
+
+def test_update_non_existing_user(client: TestClient, db: Session):
+    user = create_random_user(db)
+    crud.user.remove(db, id=user.id)
+    res = client.put(f"{settings.API_V1_STR}/user/{user.id}", json={})
+    content = res.json()
+    assert res.status_code == 400
+    assert content["detail"] == "User does not exists"
+
+
+def test_delete_user(client: TestClient, db: Session):
+    user = create_random_user(db)
+    res = client.delete(f"{settings.API_V1_STR}/user/{user.id}")
+    content = res.json()
+    obj_get = crud.user.get(db, id=user.id)
+    assert res.status_code == 200
+    assert user.id == content["id"]
+    assert user.first_name == content["first_name"]
+    assert user.last_name == content["last_name"]
+    assert user.email == content["email"]
+    assert user.password == content["password"]
+    assert user.is_active != content["is_active"]
+    assert user.has_flexible_working_hours == content["has_flexible_working_hours"]
+    assert obj_get
+
+
+def test_delete_non_existing_user(client: TestClient, db: Session):
+    user = create_random_user(db)
+    crud.user.remove(db, id=user.id)
+    res = client.delete(f"{settings.API_V1_STR}/user/{user.id}")
+    content = res.json()
+    assert res.status_code == 400
+    assert content["detail"] == "User does not exists"

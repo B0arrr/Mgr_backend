@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException
 from app import crud
 from app.api.deps import SessionDep
 from app.core.security import get_password_hash
-from app.schemas import User
+from app.schemas import User, UserCreate, UserUpdate
 
 router = APIRouter(prefix="/user", tags=["user"])
 
@@ -35,7 +35,7 @@ async def get_user(db: SessionDep, id: int) -> Any:
 
 
 @router.post("/", response_model=User)
-async def create_user(db: SessionDep, obj_in: User) -> Any:
+async def create_user(db: SessionDep, obj_in: UserCreate) -> Any:
     """
     Create new user
     :param db: Database session
@@ -46,11 +46,11 @@ async def create_user(db: SessionDep, obj_in: User) -> Any:
     if user:
         raise HTTPException(status_code=400, detail="Email already registered")
     obj_in.password = get_password_hash(obj_in.password)
-    user = crud.user.create(db, obj_in=obj_in)
+    return crud.user.create(db, obj_in=obj_in)
 
 
 @router.put("/{id}", response_model=User)
-async def update_user(db: SessionDep, id: int, obj_in: User) -> Any:
+async def update_user(db: SessionDep, id: int, obj_in: UserUpdate) -> Any:
     """
     Update user by id
     :param db: Database session
@@ -60,13 +60,19 @@ async def update_user(db: SessionDep, id: int, obj_in: User) -> Any:
     """
     user = crud.user.get(db, id=id)
     if not user:
-        raise HTTPException(status_code=400, detail="User does not exist")
-    return crud.user.update(db, id, db_obj=user, obj_in=obj_in)
+        raise HTTPException(status_code=400, detail="User does not exists")
+    return crud.user.update(db, db_obj=user, obj_in=obj_in)
 
 
 @router.delete("/{id}", response_model=User)
 async def delete_user(db: SessionDep, id: int) -> Any:
+    """
+    Delete user by id
+    :param db: Database session
+    :param id: Id of the user
+    :return: Returns deleted user
+    """
     user = crud.user.get(db, id=id)
     if not user:
-        raise HTTPException(status_code=400, detail="User does not exist")
+        raise HTTPException(status_code=400, detail="User does not exists")
     return crud.user.update(db, db_obj=user, obj_in={"is_active": False})

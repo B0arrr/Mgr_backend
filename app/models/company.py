@@ -11,4 +11,4 @@ class Company(Base):
 
     user_companies = relationship('UserEmployment', back_populates='companies', viewonly=True)
     users = relationship('User', secondary="useremployment", back_populates='companies')
-    address = relationship('Address')
+    address = relationship('Address', viewonly=True)

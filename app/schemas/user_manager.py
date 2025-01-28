@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
@@ -10,8 +12,9 @@ class UserManagerCreate(UserManagerBase):
     pass
 
 
-class UserManagerUpdate(UserManagerBase):
-    pass
+class UserManagerUpdate(BaseModel):
+    user_id: Optional[int] = None
+    manager_id: Optional[int] = None
 
 
 class UserManageInDBBase(UserManagerBase):

@@ -1,5 +1,5 @@
 from .address import Address, AddressCreate, AddressUpdate
-from .company import Company, CompanyCreate, CompanyUpdate
+from .company import Company, CompanyCreate, CompanyUpdate, CompanyDeleted
 from .department import Department, DepartmentCreate, DepartmentUpdate
 from .employment import Employment, EmploymentCreate, EmploymentUpdate
 from .position import Position, PositionCreate, PositionUpdate
