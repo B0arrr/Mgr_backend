@@ -64,6 +64,21 @@ async def update_user(db: SessionDep, id: int, obj_in: UserUpdate) -> Any:
     return crud.user.update(db, db_obj=user, obj_in=obj_in)
 
 
+@router.put("/password/{id}", response_model=User)
+async def update_password(db: SessionDep, id: int, obj_in: UserUpdate) -> Any:
+    """
+    Update user password
+    :param db: Database session
+    :param id: Id of the user
+    :param obj_in: User object to update
+    :return: Returns updated user
+    """
+    user = crud.user.get(db, id=id)
+    if not user:
+        raise HTTPException(status_code=400, detail="User does not exists")
+    return crud.user.update_password(db, db_obj=user, obj_in=obj_in)
+
+
 @router.delete("/{id}", response_model=User)
 async def delete_user(db: SessionDep, id: int) -> Any:
     """

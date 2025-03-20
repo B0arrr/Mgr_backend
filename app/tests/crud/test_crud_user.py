@@ -1,12 +1,12 @@
 from sqlalchemy.orm import Session
 
 from app import crud
-from app.core.security import get_password_hash
+from app.core.security import get_password_hash, verify_password
 from app.models import User
 from app.schemas import UserAddressCreate, UserCreate, UserUpdate
 from app.tests.utils.address import create_random_address
 from app.tests.utils.user import create_random_user
-from app.tests.utils.utils import random_bool
+from app.tests.utils.utils import random_bool, random_password, random_lower_string
 
 
 def test_get_user(db: Session):
@@ -121,6 +121,18 @@ def test_update_user(db: Session):
     )
     obj_updated = crud.user.update(db, db_obj=obj, obj_in=obj_in)
     assert obj_updated.first_name == obj_in.first_name
+
+
+def test_update_user_password(db: Session):
+    obj = create_random_user(db)
+    obj_in = UserUpdate(
+        password=random_lower_string(amount=10),
+    )
+    obj_updated = crud.user.update_password(db, db_obj=obj, obj_in=obj_in)
+    assert obj_updated.first_name == obj.first_name
+    assert obj_updated.last_name == obj.last_name
+    assert obj_updated.email == obj.email
+    assert verify_password(obj_in.password, obj_updated.password)
 
 
 def test_delete_user(db: Session):

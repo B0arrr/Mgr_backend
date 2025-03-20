@@ -3,6 +3,7 @@ from starlette.testclient import TestClient
 
 from app import crud
 from app.core.config import settings
+from app.core.security import get_password_hash, verify_password
 from app.tests.utils.user import create_random_user
 from app.tests.utils.utils import random_lower_string, random_email, random_password, random_bool
 
@@ -96,6 +97,26 @@ def test_update_non_existing_user(client: TestClient, db: Session):
     user = create_random_user(db)
     crud.user.remove(db, id=user.id)
     res = client.put(f"{settings.API_V1_STR}/user/{user.id}", json={})
+    content = res.json()
+    assert res.status_code == 400
+    assert content["detail"] == "User does not exists"
+
+
+def test_update_user_password(client: TestClient, db: Session):
+    user = create_random_user(db)
+    data = {
+        "password": "P$ssw0rd",
+    }
+    res = client.put(f"{settings.API_V1_STR}/user/password/{user.id}", json=data)
+    content = res.json()
+    assert res.status_code == 200
+    assert verify_password(data["password"], content["password"])
+
+
+def test_update_non_existing_user_password(client: TestClient, db: Session):
+    user = create_random_user(db)
+    crud.user.remove(db, id=user.id)
+    res = client.put(f"{settings.API_V1_STR}/user/password/{user.id}", json={})
     content = res.json()
     assert res.status_code == 400
     assert content["detail"] == "User does not exists"

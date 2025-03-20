@@ -1,9 +1,9 @@
-from typing import List
+from typing import List, Union, Dict, Any
 
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
-from app.core.security import verify_password
+from app.core.security import verify_password, get_password_hash
 from app.crud.base import CRUDBase
 from app.models import User, Address, UserAddress
 from app.schemas import UserCreate, UserUpdate
@@ -50,6 +50,19 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         if not verify_password(password, db_user.password):
             return None
         return db_user
+
+    def update_password(
+            self,
+            db: Session,
+            *,
+            db_obj: User,
+            obj_in: Union[UserUpdate, Dict[str, Any]]
+    ) -> User:
+        db_obj.password = get_password_hash(obj_in.password)
+        db.add(db_obj)
+        db.commit()
+        db.refresh(db_obj)
+        return db_obj
 
 
 user = CRUDUser(User)
