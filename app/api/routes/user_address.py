@@ -2,7 +2,7 @@ from typing import Any, List
 
 from fastapi import APIRouter, HTTPException
 
-from app import crud
+from app import crud, schemas
 from app.api.deps import SessionDep
 from app.schemas import UserAddress, UserAddressCreate, UserAddressUpdate
 
@@ -70,4 +70,6 @@ async def delete_user_address(db: SessionDep, id: int) -> Any:
     user_address = crud.user_address.get(db, id=id)
     if not user_address:
         raise HTTPException(status_code=400, detail="User address does not exists")
-    return crud.user_address.remove(db, id=id)
+    response_data = schemas.UserAddress.model_validate(user_address)
+    crud.user_address.remove(db, id=id)
+    return response_data

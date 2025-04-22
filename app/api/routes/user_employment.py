@@ -2,7 +2,7 @@ from typing import List, Any
 
 from fastapi import APIRouter, HTTPException
 
-from app import crud
+from app import crud, schemas
 from app.api.deps import SessionDep
 from app.schemas import UserEmployment, UserEmploymentCreate, UserEmploymentUpdate
 
@@ -70,4 +70,6 @@ async def delete_user_employment(db: SessionDep, id: int) -> Any:
     user_employment = crud.user_employment.get(db, id=id)
     if not user_employment:
         raise HTTPException(status_code=400, detail="User employment does not exists")
-    return crud.user_employment.remove(db, id=id)
+    response_data = schemas.UserEmployment.model_validate(user_employment)
+    crud.user_employment.remove(db, id=id)
+    return response_data

@@ -2,6 +2,8 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+from app.schemas import Role
+
 
 class UserRoleBase(BaseModel):
     user_id: int
@@ -25,4 +27,4 @@ class UserRoleInDBBase(UserRoleBase):
 
 
 class UserRole(UserRoleInDBBase):
-    pass
+    roles: Optional[Role] = None

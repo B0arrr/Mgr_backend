@@ -2,7 +2,7 @@ from typing import List, Any
 
 from fastapi import APIRouter, HTTPException
 
-from app import crud
+from app import crud, schemas
 from app.api.deps import SessionDep
 from app.schemas import UserRole, UserRoleCreate, UserRoleUpdate
 
@@ -70,4 +70,6 @@ async def delete_user_role(db: SessionDep, id: int) -> Any:
     user_role = crud.user_role.get(db, id=id)
     if not user_role:
         raise HTTPException(status_code=400, detail="User role does not exists")
-    return crud.user_role.remove(db, id=id)
+    response_data = schemas.UserManager.model_validate(user_role)
+    crud.user_role.remove(db, id=id)
+    return response_data

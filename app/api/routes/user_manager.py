@@ -2,7 +2,7 @@ from typing import List, Any
 
 from fastapi import APIRouter, HTTPException
 
-from app import crud
+from app import crud, schemas
 from app.api.deps import SessionDep
 from app.schemas import UserManager, UserManagerCreate, UserManagerUpdate
 
@@ -70,4 +70,6 @@ async def delete_user_manager(db: SessionDep, id: int) -> Any:
     user_manager = crud.user_manager.get(db, id=id)
     if not user_manager:
         raise HTTPException(status_code=400, detail="User manager does not exists")
-    return crud.user_manager.remove(db, id=id)
+    response_data = schemas.UserManager.model_validate(user_manager)
+    crud.user_manager.remove(db, id=id)
+    return response_data

@@ -3,6 +3,8 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+from app.schemas import Employment, Company, Department, Position
+
 
 class UserEmploymentBase(BaseModel):
     user_id: int
@@ -36,4 +38,7 @@ class UserEmploymentInDBBase(UserEmploymentBase):
 
 
 class UserEmployment(UserEmploymentInDBBase):
-    pass
+    employments: Optional[Employment] = None
+    companies: Optional[Company] = None
+    departments: Optional[Department] = None
+    positions: Optional[Position] = None

@@ -1,6 +1,8 @@
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel
+
+from app.schemas import Role
 
 
 class UserBase(BaseModel):
@@ -33,4 +35,4 @@ class UserInDBBase(UserBase):
 
 
 class User(UserInDBBase):
-    pass
+    roles: Optional[List[Role]] = None

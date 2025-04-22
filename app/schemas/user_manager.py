@@ -2,6 +2,8 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+from app.schemas import User
+
 
 class UserManagerBase(BaseModel):
     user_id: int
@@ -25,4 +27,4 @@ class UserManageInDBBase(UserManagerBase):
 
 
 class UserManager(UserManageInDBBase):
-    pass
+    users: Optional[User] = None

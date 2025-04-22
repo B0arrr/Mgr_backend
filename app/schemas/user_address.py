@@ -1,6 +1,8 @@
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel
+
+from app.schemas import Address
 
 
 class UserAddressBase(BaseModel):
@@ -27,4 +29,4 @@ class UserAddressInDBBase(UserAddressBase):
 
 
 class UserAddress(UserAddressInDBBase):
-    pass
+    addresses: Optional[Address] = None
