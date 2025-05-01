@@ -28,4 +28,4 @@ class User(Base):
     positions = relationship("Position", secondary="useremployment", back_populates="users")
     roles = relationship("Role", secondary="userrole", back_populates="users")
     user_schedules = relationship("UserSchedule")
-    user_workhours = relationship("UserWorkHour")
+    user_workhours = relationship("UserWorkHour", back_populates="user")

@@ -3,6 +3,8 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+from app.schemas import User
+
 
 class UserWorkHourBase(BaseModel):
     user_id: int
@@ -32,4 +34,4 @@ class UserWorkHourInDBBase(UserWorkHourBase):
 
 
 class UserWorkHour(UserWorkHourInDBBase):
-    pass
+    user: Optional[User] = None
