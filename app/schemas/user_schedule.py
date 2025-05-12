@@ -1,7 +1,9 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel
+
+from app.schemas import User, UserEmployment
 
 
 class UserScheduleBase(BaseModel):
@@ -28,4 +30,5 @@ class UserScheduleInDBBase(UserScheduleBase):
 
 
 class UserSchedule(UserScheduleInDBBase):
-    pass
+    user: Optional[User] = None
+    user_employments: Optional[List[UserEmployment]] = None

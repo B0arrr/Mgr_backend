@@ -16,5 +16,7 @@ class Settings(BaseSettings):
     SUPERUSER_EMAIL: str = 'admin@admin.com'
     SUPERUSER_PASSWORD: str = 'Admin123!'
 
+    OPEN_API_KEY: str = ''
+
 
 settings = Settings()

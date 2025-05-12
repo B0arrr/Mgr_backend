@@ -12,6 +12,8 @@ passlib = {extras = ["bcrypt"], version = "*"}
 python-multipart = "*"
 pydantic-settings = "*"
 httpx = "*"
+holidays = "*"
+openai = "*"
 
 [dev-packages]
 pytest = "*"

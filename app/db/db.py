@@ -33,6 +33,11 @@ def init_db(db: Session) -> None:
         crud.role.create(db, obj_in=role_in2)
         crud.role.create(db, obj_in=role_in3)
 
+    role_admin = crud.role.get_by_name(db, name="Admin")
+    if not role_admin:
+        role_admin_in = RoleCreate(name="Admin")
+        crud.role.create(db, obj_in=role_admin_in)
+
     user_role = crud.user_role.get_all(db)
 
     if not user_role:

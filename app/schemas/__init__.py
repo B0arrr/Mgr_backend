@@ -12,3 +12,4 @@ from .user_manager import UserManager, UserManagerCreate, UserManagerUpdate
 from .user_role import UserRole, UserRoleCreate, UserRoleUpdate
 from .user_schedule import UserSchedule, UserScheduleCreate, UserScheduleUpdate
 from .user_workhour import UserWorkHour, UserWorkHourCreate, UserWorkHourUpdate
+from .generator import GeneratorCreate

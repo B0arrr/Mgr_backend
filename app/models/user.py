@@ -27,5 +27,5 @@ class User(Base):
     manages = relationship("UserManager", foreign_keys="UserManager.manager_id", back_populates="managers")
     positions = relationship("Position", secondary="useremployment", back_populates="users")
     roles = relationship("Role", secondary="userrole", back_populates="users")
-    user_schedules = relationship("UserSchedule")
+    user_schedules = relationship("UserSchedule", back_populates="user")
     user_workhours = relationship("UserWorkHour", back_populates="user")
